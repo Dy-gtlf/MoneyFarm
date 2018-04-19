@@ -12,8 +12,8 @@ namespace MoneyFarm.Model
         public String Content { get; set; }
         [Column(Name = "Category", DbType = "NVARCHAR", CanBeNull = false)]
         public String Category { get; set; }
-        [Column(Name = "Note", DbType = "NVARCHAR")]
-        public String Note { get; set; }
+        [Column(Name = "Memo", DbType = "NVARCHAR")]
+        public String Memo { get; set; }
         [Column(Name = "Date", DbType = "NVARCHAR", CanBeNull = false)]
         public String Date { get; set; }
     }

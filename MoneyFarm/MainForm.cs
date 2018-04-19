@@ -28,7 +28,7 @@ namespace MoneyFarm
                 using (var db = new DataContext(connection))
                 {
                     // データ追加
-                    var data = new Log { Content = "test", Category = "", Note = "", Date = "" };
+                    var data = new Log { Content = "test", Category = "", Memo = "", Date = "" };
                     var table = db.GetTable<Log>();
                     table.InsertOnSubmit(data);
                     db.SubmitChanges();
@@ -75,11 +75,12 @@ namespace MoneyFarm
                 connection.Open();
                 using (var db = new DataContext(connection))
                 {
-                    // データグリッドに表示
+                    // データグリッドに同期
                     BindingSource bindingSource = new BindingSource();
                     var table = db.GetTable<Log>();
                     bindingSource.DataSource = table;
                     LogDataGridView.DataSource = bindingSource;
+                    LogDataGridView.Columns[0].Visible = false;
                 }
             }
         }
