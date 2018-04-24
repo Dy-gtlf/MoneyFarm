@@ -14,11 +14,9 @@ namespace MoneyFarm
 {
     public partial class EditForm : Form
     {
-        public EditForm(IOrderedQueryable<Category> categories, DataGridViewRow log)
+        public EditForm()
         {
             InitializeComponent();
-            
-            CategorylistBox.Text = log.Cells[1].Value.ToString();
         }
     }
 }

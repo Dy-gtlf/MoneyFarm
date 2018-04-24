@@ -1,7 +1,7 @@
 ﻿using MoneyFarm.Model;
 using System.ComponentModel;
 using System.Data.Linq;
-using System.Data.SQLite;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -11,15 +11,10 @@ namespace MoneyFarm
     public partial class MainForm : Form
     {
         // データ取得
-        private SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder
-        {
-            DataSource = $@"{Directory.GetCurrentDirectory()}\DB\Data.sqlite3"
-        };
-
-        private SQLiteConnection connection;
-        private DataContext db;
-        private IOrderedQueryable<Category> categories;
-        private IOrderedQueryable<Log> table;
+        private string connectionString = $@"Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename={Directory.GetCurrentDirectory()
+    }\DB\MoneyFarmDataBase.mdf;Integrated Security = True; Connect Timeout = 30";
+        
+        private SqlConnection connection;
 
         public MainForm()
         {
@@ -28,47 +23,10 @@ namespace MoneyFarm
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-            if (File.Exists(connectionString.DataSource) == false)
-            {
-                MessageBox.Show($"{connectionString.DataSource}が存在しません。\nプログラムを終了します。");
-                Close();
-            }
-            connection = new SQLiteConnection(connectionString.ToString());
+            // TODO: このコード行はデータを 'moneyFarmDataBaseDataSet.Logs' テーブルに読み込みます。必要に応じて移動、または削除をしてください。
+            this.logsTableAdapter.Fill(this.moneyFarmDataBaseDataSet.Logs);
+            connection = new SqlConnection(connectionString);
             connection.Open();
-            db = new DataContext(connection);
-            var bindingSource = new BindingSource();
-            // 日付が近い順で
-            table = db.GetTable<Log>().OrderByDescending(x => x.Date);
-            // DataGridViewにデータベースを同期
-            bindingSource.DataSource = table;
-            LogsDataGridView.DataSource = bindingSource;
-            // 配置を整理
-            DataGridViewInit();
-        }
-
-        // ヘッダーの編集、文字配置の変更
-        private void DataGridViewInit()
-        {
-            // Idを非表示
-            LogsDataGridView.Columns[0].Visible = false;
-            foreach (DataGridViewColumn column in LogsDataGridView.Columns)
-            {
-                column.SortMode = DataGridViewColumnSortMode.NotSortable;
-                column.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            }
-            // 各セルの編集
-            LogsDataGridView.Columns[1].HeaderText = "カテゴリ";
-
-            LogsDataGridView.Columns[2].HeaderText = "詳細";
-
-            LogsDataGridView.Columns[3].HeaderText = "収支";
-            LogsDataGridView.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
-            LogsDataGridView.Columns[4].HeaderText = "金額";
-            LogsDataGridView.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-
-            LogsDataGridView.Columns[5].HeaderText = "日付";
-            LogsDataGridView.Columns[5].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
         
         // 非アクティブで選択解除
@@ -91,12 +49,12 @@ namespace MoneyFarm
         {
             if (LogsDataGridView.CurrentRow != null)
             {
-                using (var editForm = new EditForm(categories, LogsDataGridView.CurrentRow))
+                using (var editForm = new EditForm())
                 {
                     editForm.ShowDialog(this);
                 }
-                db.SubmitChanges();
             }
         }
+
     }
 }

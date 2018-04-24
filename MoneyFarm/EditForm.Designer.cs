@@ -28,25 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.CategorylistBox = new System.Windows.Forms.ListBox();
+            this.CategoryComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // CategorylistBox
+            // CategoryComboBox
             // 
-            this.CategorylistBox.FormattingEnabled = true;
-            this.CategorylistBox.ItemHeight = 18;
-            this.CategorylistBox.Location = new System.Drawing.Point(12, 12);
-            this.CategorylistBox.Name = "CategorylistBox";
-            this.CategorylistBox.Size = new System.Drawing.Size(165, 40);
-            this.CategorylistBox.TabIndex = 0;
+            this.CategoryComboBox.FormattingEnabled = true;
+            this.CategoryComboBox.Location = new System.Drawing.Point(12, 12);
+            this.CategoryComboBox.Name = "CategoryComboBox";
+            this.CategoryComboBox.Size = new System.Drawing.Size(101, 20);
+            this.CategoryComboBox.TabIndex = 0;
             // 
             // EditForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(423, 343);
-            this.Controls.Add(this.CategorylistBox);
+            this.ClientSize = new System.Drawing.Size(282, 229);
+            this.Controls.Add(this.CategoryComboBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "EditForm";
             this.Text = "EditForm";
             this.ResumeLayout(false);
@@ -55,6 +55,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox CategorylistBox;
+        private System.Windows.Forms.ComboBox CategoryComboBox;
     }
 }
