@@ -4,17 +4,24 @@ using System.Data.Linq.Mapping;
 namespace MoneyFarm.Model
 {
     [Table(Name = "Logs")]
-    class Log
+    public class Log
     {
         [Column(Name = "Id", DbType = "INT", IsPrimaryKey = true)]
-        public Int32? Id { get; set; }
-        [Column(Name = "Content", DbType = "NVARCHAR", CanBeNull = false)]
-        public String Content { get; set; }
+        public int? Id { get; set; }
+
         [Column(Name = "Category", DbType = "NVARCHAR", CanBeNull = false)]
-        public String Category { get; set; }
-        [Column(Name = "Memo", DbType = "NVARCHAR")]
-        public String Memo { get; set; }
+        public string Category { get; set; }
+
+        [Column(Name = "Detail", DbType = "NVARCHAR")]
+        public string Detail { get; set; }
+
+        [Column(Name = "Balance", DbType = "NVARCHAR", CanBeNull = false)]
+        public string Balance { get; set; }
+
+        [Column(Name = "Amount", DbType = "INT", CanBeNull = false)]
+        public int Amount { get; set; }
+
         [Column(Name = "Date", DbType = "NVARCHAR", CanBeNull = false)]
-        public String Date { get; set; }
+        public string Date { get; set; }
     }
 }
