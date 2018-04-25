@@ -46,6 +46,7 @@ namespace MoneyFarm.Properties {
   <string>趣味・娯楽</string>
   <string>お小遣い</string>
   <string>定期収入</string>
+  <string>その他</string>
 </ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection Categories {
             get {
