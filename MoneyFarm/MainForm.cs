@@ -1,4 +1,4 @@
-﻿using MoneyFarm.Model;
+﻿using System;
 using System.ComponentModel;
 using System.Data.Linq;
 using System.Data.SqlClient;
@@ -10,23 +10,26 @@ namespace MoneyFarm
 {
     public partial class MainForm : Form
     {
-        // データ取得
-        private string connectionString = $@"Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename={Directory.GetCurrentDirectory()
-    }\DB\MoneyFarmDataBase.mdf;Integrated Security = True; Connect Timeout = 30";
-        
-        private SqlConnection connection;
-
         public MainForm()
         {
             InitializeComponent();
+            
         }
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
             // TODO: このコード行はデータを 'moneyFarmDataBaseDataSet.Logs' テーブルに読み込みます。必要に応じて移動、または削除をしてください。
-            this.logsTableAdapter.Fill(this.moneyFarmDataBaseDataSet.Logs);
-            connection = new SqlConnection(connectionString);
-            connection.Open();
+            logsTableAdapter.Fill(moneyFarmDataBaseDataSet.Logs);
+            CategoriesComboBox.Items.Add("すべてのカテゴリ");
+            CategoriesComboBox.Items.AddRange(Properties.Settings.Default.Categories.Cast<string>().ToArray());
+            CategoriesComboBox.Items.Add("その他");
+
+            CategoriesComboBox.SelectedIndex = 0;
+            BalanceComboBox.SelectedIndex = 0;
+            // 今から1ヶ月以内を表示
+            DateTimePicker2.Value = DateTime.Now;
+            DateTimePicker1.Value = DateTime.Now.AddMonths(-1);
+            FilterAndSortDataGridView();
         }
         
         // 非アクティブで選択解除
@@ -35,13 +38,30 @@ namespace MoneyFarm
             LogsDataGridView.ClearSelection();
         }
 
-        // 並び替え
+        
         private void SortButton_Click(object sender, System.EventArgs e)
         {
-            using (var sortForm = new SortForm())
+            FilterAndSortDataGridView();
+        }
+
+        // 表示更新
+        private void FilterAndSortDataGridView()
+        {
+            // フィルター用の文字列
+            string filter = "";
+            if (CategoriesComboBox.SelectedIndex != 0)
             {
-                sortForm.ShowDialog(this);
+                filter += string.Format($"Category LIKE '{CategoriesComboBox.Text}' AND ");
             }
+            if (BalanceComboBox.SelectedIndex != 0)
+            {
+                filter += string.Format($"Balance LIKE '{BalanceComboBox.Text}' AND ");
+            }
+            filter += string.Format($"Date >= '{DateTimePicker1.Value.ToShortDateString()}' AND ");
+            filter += string.Format($"Date <= '{DateTimePicker2.Value.ToShortDateString()}'");
+            // フィルターにセット
+            logsBindingSource.Filter = filter;
+            logsBindingSource.Sort = "Date";
         }
 
         // 編集ボタン

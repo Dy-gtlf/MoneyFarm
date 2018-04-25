@@ -26,22 +26,33 @@ namespace MoneyFarm.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\DB\\Data.mdf;I" +
-            "ntegrated Security=True")]
-        public string DataConnectionString {
-            get {
-                return ((string)(this["DataConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\DB\\MoneyFarmD" +
             "ataBase.mdf;Integrated Security=True;Connect Timeout=30")]
         public string MoneyFarmDataBaseConnectionString {
             get {
                 return ((string)(this["MoneyFarmDataBaseConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>消耗品</string>
+  <string>生活費</string>
+  <string>食費</string>
+  <string>通勤・通学</string>
+  <string>交際費</string>
+  <string>趣味・娯楽</string>
+  <string>お小遣い</string>
+  <string>定期収入</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection Categories {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Categories"]));
+            }
+            set {
+                this["Categories"] = value;
             }
         }
     }
