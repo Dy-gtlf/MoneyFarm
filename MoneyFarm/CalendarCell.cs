@@ -14,7 +14,7 @@ namespace MoneyFarm
             : base()
         {
             // Use the short date format.
-            this.Style.Format = "d";
+            Style.Format = "d";
         }
 
         public override void InitializeEditingControl(int rowIndex, object
@@ -26,14 +26,7 @@ namespace MoneyFarm
             CalendarEditingControl ctl =
                 DataGridView.EditingControl as CalendarEditingControl;
             // Use the default row value when Value property is null.
-            if (this.Value == null)
-            {
-                ctl.Value = (DateTime)this.DefaultNewRowValue;
-            }
-            else
-            {
-                ctl.Value = (DateTime)this.Value;
-            }
+            ctl.Value = DateTime.Now;
         }
 
         public override Type EditType

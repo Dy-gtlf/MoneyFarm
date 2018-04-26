@@ -44,8 +44,8 @@ namespace MoneyFarm.Properties {
   <string>通勤・通学</string>
   <string>交際費</string>
   <string>趣味・娯楽</string>
-  <string>お小遣い</string>
   <string>定期収入</string>
+  <string>臨時収入</string>
   <string>その他</string>
 </ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection Categories {

@@ -19,8 +19,8 @@
   &lt;string&gt;通勤・通学&lt;/string&gt;
   &lt;string&gt;交際費&lt;/string&gt;
   &lt;string&gt;趣味・娯楽&lt;/string&gt;
-  &lt;string&gt;お小遣い&lt;/string&gt;
   &lt;string&gt;定期収入&lt;/string&gt;
+  &lt;string&gt;臨時収入&lt;/string&gt;
   &lt;string&gt;その他&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
