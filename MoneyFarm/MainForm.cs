@@ -22,16 +22,17 @@ namespace MoneyFarm
         /// <param name="e"></param>
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-            // DataGridViewのComboBoxの内容を設定
+            // データベースの内容を同期
+            logsTableAdapter.Fill(moneyFarmDataBaseDataSet.Logs);
+            // LogsDataGridViewの設定
             ((DataGridViewComboBoxColumn)LogsDataGridView.Columns[1]).Items.AddRange(Properties.Settings.Default.Categories.Cast<string>().ToArray());
             ((DataGridViewComboBoxColumn)LogsDataGridView.Columns[1]).DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
             ((DataGridViewComboBoxColumn)LogsDataGridView.Columns[3]).DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns[0]).Items.AddRange(Properties.Settings.Default.Categories.Cast<string>().ToArray());
-            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns[0]).DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns[2]).DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            // データベースの内容を同期
-            logsTableAdapter.Fill(moneyFarmDataBaseDataSet.Logs);
-            // ComboBoxの内容を設定
+            // NewLogDataGridViewの設定
+            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items.AddRange(Properties.Settings.Default.Categories.Cast<string>().ToArray());
+            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Balance"]).DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
+            // フィルターのComboBoxの内容を設定
             CategoriesComboBox.Items.Add("すべてのカテゴリ");
             CategoriesComboBox.Items.AddRange(Properties.Settings.Default.Categories.Cast<string>().ToArray());
             // 未選択状態の空白を表示しない
@@ -40,24 +41,14 @@ namespace MoneyFarm
             // 今日から1ヶ月以内を表示
             DateTimePicker2.Value = DateTime.Now;
             DateTimePicker1.Value = DateTime.Now.AddMonths(-1);
-            FilterAndSortDataGridView();
+            FilterAndSortLogsDataGridView();
 
             // 新規データの初期値を設定
             NewLogDataGridView.Rows.Add();
             NewLogDataGridView.Rows[0].Cells["Category"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns[0]).Items[0].ToString();
             NewLogDataGridView.Rows[0].Cells["Balance"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns[2]).Items[0].ToString();
             NewLogDataGridView.Rows[0].Cells["Amount"].Value = 0;
-            NewLogDataGridView.Rows[0].Cells["Date"].Value = DateTime.Now.ToShortDateString();
-        }
-
-        /// <summary>
-        /// 非アクティブで選択解除
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void LogsDataGridView_Leave(object sender, System.EventArgs e)
-        {
-            LogsDataGridView.ClearSelection();
+            NewLogDataGridView.Rows[0].Cells["Date"].Value = DateTime.Now;
         }
 
         /// <summary>
@@ -67,13 +58,13 @@ namespace MoneyFarm
         /// <param name="e"></param>
         private void FilterButton_Click(object sender, System.EventArgs e)
         {
-            FilterAndSortDataGridView();
+            FilterAndSortLogsDataGridView();
         }
 
         /// <summary>
-        /// DataGridViewの表示を更新
+        /// LogsDataGridViewの表示を更新
         /// </summary>
-        private void FilterAndSortDataGridView()
+        private void FilterAndSortLogsDataGridView()
         {
             // フィルター用の文字列
             string filter = "";
@@ -103,31 +94,89 @@ namespace MoneyFarm
             logsTableAdapter.Update(moneyFarmDataBaseDataSet);
         }
 
+        /// <summary>
+        /// 追加ボタンをクリックしたときのイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AdditionButton_Click(object sender, EventArgs e)
         {
+            // 新規データ行の作成
             var table = moneyFarmDataBaseDataSet.Tables["Logs"];
             var newRow = table.NewRow();
-            newRow["Category"] = NewLogDataGridView.Rows[0].Cells[0].Value.ToString();
+            newRow["Category"] = NewLogDataGridView.Rows[0].Cells["Category"].Value;
             if (NewLogDataGridView.Rows[0].Cells[1].Value != null)
             {
-                newRow["Detail"] = NewLogDataGridView.Rows[0].Cells[1].Value.ToString();
+                newRow["Detail"] = NewLogDataGridView.Rows[0].Cells["Detail"].Value;
             }
-            newRow["Balance"] = NewLogDataGridView.Rows[0].Cells[2].Value.ToString();
-            newRow["Amount"] = NewLogDataGridView.Rows[0].Cells[3].Value.ToString();
-            newRow["Date"] = DateTime.Now.ToShortTimeString();
+            newRow["Balance"] = NewLogDataGridView.Rows[0].Cells["Balance"].Value;
+            newRow["Amount"] = NewLogDataGridView.Rows[0].Cells["Amount"].Value;
+            newRow["Date"] = ((DateTime)NewLogDataGridView.Rows[0].Cells["Date"].Value);
+            // 新規データの追加
             table.Rows.Add(newRow);
             logsTableAdapter.Update(moneyFarmDataBaseDataSet);
+            // 入力項目の初期化
+            NewLogDataGridView.Rows[0].Cells["Category"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns[0]).Items[0].ToString();
+            NewLogDataGridView.Rows[0].Cells["Detail"].Value = "";
+            NewLogDataGridView.Rows[0].Cells["Balance"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns[2]).Items[0].ToString();
+            NewLogDataGridView.Rows[0].Cells["Amount"].Value = 0;
+            NewLogDataGridView.Rows[0].Cells["Date"].Value = DateTime.Now.ToShortDateString();
         }
 
+        /// <summary>
+        /// 削除ボタンをクリックしたときのイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeletionButton_Click(object sender, EventArgs e)
         {
-            var table = moneyFarmDataBaseDataSet.Tables["Logs"];
-            var result = MessageBox.Show("選択しているデータを削除しますか?","確認",MessageBoxButtons.YesNo,MessageBoxIcon.Exclamation,MessageBoxDefaultButton.Button2);
-            if (result == DialogResult.Yes)
+            // 選択しているデータがあるなら
+            if (LogsDataGridView.SelectedRows.Count == 1)
             {
-                var row = table.Rows[LogsDataGridView.SelectedRows[0].Index];
-                row.Delete();
-                logsTableAdapter.Update(moneyFarmDataBaseDataSet);
+                var table = moneyFarmDataBaseDataSet.Tables["Logs"];
+                var result = MessageBox.Show(this, "選択しているデータを削除しますか?", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+                // Yesを選択したなら削除
+                if (result == DialogResult.Yes)
+                {
+                    var row = table.Rows[LogsDataGridView.SelectedRows[0].Index];
+                    row.Delete();
+                    logsTableAdapter.Update(moneyFarmDataBaseDataSet);
+                    // 選択状態をクリア
+                    LogsDataGridView.ClearSelection();
+                }
+            }
+            // データが選択されていないなら
+            else
+            {
+                MessageBox.Show(this, "データが選択されていません。", "データ未選択", MessageBoxButtons.OK ,MessageBoxIcon.Exclamation);
+            }
+        }
+
+        /// <summary>
+        /// 既存データの入力エラー表示
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LogsDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            if (e.Exception != null && e.ColumnIndex == 4)
+            {
+                MessageBox.Show(this, string.Format($"{LogsDataGridView.Columns[e.ColumnIndex].HeaderText} には数値のみ入力できます。"), "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 新規データの入力チェック
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NewLogDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            // 金額がintに変換できないなら
+            if (e.ColumnIndex == 3 && int.TryParse(NewLogDataGridView.Rows[0].Cells[3].Value.ToString(), out int result) == false)
+            {
+                MessageBox.Show(this, string.Format($"{NewLogDataGridView.Columns[e.ColumnIndex].HeaderText} には数値のみ入力できます。"), "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                NewLogDataGridView.Rows[0].Cells[3].Value = 0;
             }
         }
     }
