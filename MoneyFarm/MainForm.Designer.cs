@@ -41,6 +41,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.LogsDataGridView = new System.Windows.Forms.DataGridView();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.categoryDataGridViewComboBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -72,10 +75,12 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.calendarColumn3 = new MoneyFarm.CalendarColumn();
+            this.DataChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.LogsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.moneyFarmDataBaseDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NewLogDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataChart)).BeginInit();
             this.SuspendLayout();
             // 
             // LogsDataGridView
@@ -104,7 +109,7 @@
             this.dateDataGridViewCalendarColumn});
             this.LogsDataGridView.DataSource = this.logsBindingSource;
             this.LogsDataGridView.Location = new System.Drawing.Point(18, 12);
-            this.LogsDataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LogsDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.LogsDataGridView.MultiSelect = false;
             this.LogsDataGridView.Name = "LogsDataGridView";
             this.LogsDataGridView.RowHeadersVisible = false;
@@ -413,11 +418,28 @@
             this.calendarColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.calendarColumn3.Width = 186;
             // 
+            // DataChart
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.DataChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.DataChart.Legends.Add(legend1);
+            this.DataChart.Location = new System.Drawing.Point(18, 432);
+            this.DataChart.Name = "DataChart";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.DataChart.Series.Add(series1);
+            this.DataChart.Size = new System.Drawing.Size(300, 300);
+            this.DataChart.TabIndex = 16;
+            this.DataChart.Text = "chart1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1176, 692);
+            this.Controls.Add(this.DataChart);
             this.Controls.Add(this.DeletionButton);
             this.Controls.Add(this.AdditionButton);
             this.Controls.Add(this.NewLogDataGridView);
@@ -437,6 +459,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.logsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.moneyFarmDataBaseDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NewLogDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -474,6 +497,7 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn Balance;
         private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
         private CalendarColumn Date;
+        private System.Windows.Forms.DataVisualization.Charting.Chart DataChart;
     }
 }
 
