@@ -135,6 +135,8 @@ namespace MoneyFarm
             logsTableAdapter.Update(moneyFarmDataBaseDataSet);
             // 入力項目の初期化
             NewLogDataGridViewInit();
+            LogsDataGridView.ClearSelection();
+            NewLogDataGridView.ClearSelection();
         }
 
         /// <summary>
@@ -192,14 +194,26 @@ namespace MoneyFarm
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        private void NewLogDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void LogsDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             // 金額がintに変換できないなら
-            //if (e.ColumnIndex == 2 && int.TryParse(NewLogDataGridView.Rows[0].Cells[e.ColumnIndex].Value.ToString(), out int result) == false)
-            //{
-            //    MessageBox.Show(this, string.Format($"{NewLogDataGridView.Columns[e.ColumnIndex].HeaderText} には数値のみ入力できます。"), "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    e.Cancel = true;
-            //}
+            if (e.ColumnIndex == 4 && int.TryParse(e.FormattedValue.ToString(), out int result) == false)
+            {
+                MessageBox.Show(this, string.Format($"{LogsDataGridView.Columns[e.ColumnIndex].HeaderText} には数値のみ入力できます。"), "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ((DataGridView)sender).CancelEdit();
+                e.Cancel = true;      
+            }
+        }
+
+        private void NewLogDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            // 金額がintに変換できないなら
+            if (e.ColumnIndex == 3 && int.TryParse(e.FormattedValue.ToString(), out int result) == false)
+            {
+                MessageBox.Show(this, string.Format($"{NewLogDataGridView.Columns[e.ColumnIndex].HeaderText} には数値のみ入力できます。"), "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ((DataGridView)sender).CancelEdit();
+                e.Cancel = true;
+            }
         }
     }
 }
