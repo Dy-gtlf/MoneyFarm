@@ -31,9 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -41,6 +38,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.LogsDataGridView = new System.Windows.Forms.DataGridView();
             this.logsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.moneyFarmDataBaseDataSet = new MoneyFarm.MoneyFarmDataBaseDataSet();
@@ -52,11 +52,6 @@
             this.BalanceComboBox = new System.Windows.Forms.ComboBox();
             this.logsTableAdapter = new MoneyFarm.MoneyFarmDataBaseDataSetTableAdapters.LogsTableAdapter();
             this.NewLogDataGridView = new System.Windows.Forms.DataGridView();
-            this.Category = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Detail = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Balance = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Date = new MoneyFarm.CalendarColumn();
             this.AdditionButton = new System.Windows.Forms.Button();
             this.DeletionButton = new System.Windows.Forms.Button();
             this.calendarColumn1 = new MoneyFarm.CalendarColumn();
@@ -66,12 +61,17 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.calendarColumn3 = new MoneyFarm.CalendarColumn();
-            this.idDataGridViewTextBoxColumn = new MoneyFarm.CalendarColumn();
-            this.categoryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.categoryDataGridViewComboBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.detailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.balanceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.balanceDataGridViewComboBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.amountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateDataGridViewTextBoxColumn = new MoneyFarm.CalendarColumn();
+            this.dateDataGridViewCalendarColumn = new MoneyFarm.CalendarColumn();
+            this.Category = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Detail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Balance = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Date = new MoneyFarm.CalendarColumn();
             ((System.ComponentModel.ISupportInitialize)(this.LogsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.logsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.moneyFarmDataBaseDataSet)).BeginInit();
@@ -97,23 +97,22 @@
             this.LogsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.LogsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idDataGridViewTextBoxColumn,
-            this.categoryDataGridViewTextBoxColumn,
+            this.categoryDataGridViewComboBoxColumn,
             this.detailDataGridViewTextBoxColumn,
-            this.balanceDataGridViewTextBoxColumn,
+            this.balanceDataGridViewComboBoxColumn,
             this.amountDataGridViewTextBoxColumn,
-            this.dateDataGridViewTextBoxColumn});
+            this.dateDataGridViewCalendarColumn});
             this.LogsDataGridView.DataSource = this.logsBindingSource;
-            this.LogsDataGridView.Location = new System.Drawing.Point(18, 12);
-            this.LogsDataGridView.Margin = new System.Windows.Forms.Padding(4);
+            this.LogsDataGridView.Location = new System.Drawing.Point(12, 8);
             this.LogsDataGridView.MultiSelect = false;
             this.LogsDataGridView.Name = "LogsDataGridView";
             this.LogsDataGridView.RowHeadersVisible = false;
             this.LogsDataGridView.RowTemplate.Height = 21;
             this.LogsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.LogsDataGridView.Size = new System.Drawing.Size(932, 344);
+            this.LogsDataGridView.Size = new System.Drawing.Size(621, 229);
             this.LogsDataGridView.TabIndex = 3;
             this.LogsDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.LogsDataGridView_CellEndEdit);
-            this.LogsDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.LogsDataGridView_DataError);
+            this.LogsDataGridView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.LogsDataGridView_CellEnter);
             // 
             // logsBindingSource
             // 
@@ -127,26 +126,29 @@
             // 
             // DateTimePicker1
             // 
-            this.DateTimePicker1.Location = new System.Drawing.Point(957, 84);
+            this.DateTimePicker1.Location = new System.Drawing.Point(638, 56);
+            this.DateTimePicker1.Margin = new System.Windows.Forms.Padding(2);
             this.DateTimePicker1.Name = "DateTimePicker1";
-            this.DateTimePicker1.Size = new System.Drawing.Size(200, 25);
+            this.DateTimePicker1.Size = new System.Drawing.Size(135, 19);
             this.DateTimePicker1.TabIndex = 4;
             this.DateTimePicker1.Value = new System.DateTime(2018, 4, 1, 0, 0, 0, 0);
             // 
             // DateTimePicker2
             // 
-            this.DateTimePicker2.Location = new System.Drawing.Point(957, 144);
+            this.DateTimePicker2.Location = new System.Drawing.Point(638, 96);
+            this.DateTimePicker2.Margin = new System.Windows.Forms.Padding(2);
             this.DateTimePicker2.Name = "DateTimePicker2";
-            this.DateTimePicker2.Size = new System.Drawing.Size(200, 25);
+            this.DateTimePicker2.Size = new System.Drawing.Size(135, 19);
             this.DateTimePicker2.TabIndex = 5;
             this.DateTimePicker2.Value = new System.DateTime(2018, 4, 30, 0, 0, 0, 0);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1042, 118);
+            this.label1.Location = new System.Drawing.Point(695, 79);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(26, 18);
+            this.label1.Size = new System.Drawing.Size(17, 12);
             this.label1.TabIndex = 6;
             this.label1.Text = "↓";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -155,16 +157,18 @@
             // 
             this.CategoriesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CategoriesComboBox.FormattingEnabled = true;
-            this.CategoriesComboBox.Location = new System.Drawing.Point(957, 12);
+            this.CategoriesComboBox.Location = new System.Drawing.Point(638, 8);
+            this.CategoriesComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.CategoriesComboBox.Name = "CategoriesComboBox";
-            this.CategoriesComboBox.Size = new System.Drawing.Size(200, 26);
+            this.CategoriesComboBox.Size = new System.Drawing.Size(135, 20);
             this.CategoriesComboBox.TabIndex = 11;
             // 
             // FilterButton
             // 
-            this.FilterButton.Location = new System.Drawing.Point(957, 175);
+            this.FilterButton.Location = new System.Drawing.Point(638, 117);
+            this.FilterButton.Margin = new System.Windows.Forms.Padding(2);
             this.FilterButton.Name = "FilterButton";
-            this.FilterButton.Size = new System.Drawing.Size(206, 32);
+            this.FilterButton.Size = new System.Drawing.Size(137, 21);
             this.FilterButton.TabIndex = 1;
             this.FilterButton.Text = "表示更新";
             this.FilterButton.UseVisualStyleBackColor = true;
@@ -178,9 +182,10 @@
             "収支",
             "支出",
             "収入"});
-            this.BalanceComboBox.Location = new System.Drawing.Point(957, 48);
+            this.BalanceComboBox.Location = new System.Drawing.Point(638, 32);
+            this.BalanceComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.BalanceComboBox.Name = "BalanceComboBox";
-            this.BalanceComboBox.Size = new System.Drawing.Size(200, 26);
+            this.BalanceComboBox.Size = new System.Drawing.Size(135, 20);
             this.BalanceComboBox.TabIndex = 12;
             // 
             // logsTableAdapter
@@ -210,63 +215,22 @@
             this.Balance,
             this.Amount,
             this.Date});
-            this.NewLogDataGridView.Location = new System.Drawing.Point(18, 363);
+            this.NewLogDataGridView.Location = new System.Drawing.Point(12, 242);
+            this.NewLogDataGridView.Margin = new System.Windows.Forms.Padding(2);
             this.NewLogDataGridView.Name = "NewLogDataGridView";
             this.NewLogDataGridView.RowHeadersVisible = false;
             this.NewLogDataGridView.RowTemplate.Height = 27;
-            this.NewLogDataGridView.Size = new System.Drawing.Size(932, 63);
+            this.NewLogDataGridView.Size = new System.Drawing.Size(621, 42);
             this.NewLogDataGridView.TabIndex = 13;
             this.NewLogDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.NewLogDataGridView_CellEndEdit);
-            // 
-            // Category
-            // 
-            this.Category.HeaderText = "カテゴリ";
-            this.Category.Name = "Category";
-            this.Category.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Detail
-            // 
-            this.Detail.HeaderText = "詳細";
-            this.Detail.MaxInputLength = 20;
-            this.Detail.Name = "Detail";
-            this.Detail.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Balance
-            // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Balance.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Balance.HeaderText = "収支";
-            this.Balance.Items.AddRange(new object[] {
-            "支出",
-            "収入"});
-            this.Balance.Name = "Balance";
-            this.Balance.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Amount
-            // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "N0";
-            dataGridViewCellStyle7.NullValue = null;
-            this.Amount.DefaultCellStyle = dataGridViewCellStyle7;
-            this.Amount.HeaderText = "金額";
-            this.Amount.MaxInputLength = 10;
-            this.Amount.Name = "Amount";
-            this.Amount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Date
-            // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.Format = "d";
-            this.Date.DefaultCellStyle = dataGridViewCellStyle8;
-            this.Date.HeaderText = "日付";
-            this.Date.Name = "Date";
-            this.Date.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.NewLogDataGridView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.NewLogDataGridView_CellEnter);
             // 
             // AdditionButton
             // 
-            this.AdditionButton.Location = new System.Drawing.Point(958, 363);
+            this.AdditionButton.Location = new System.Drawing.Point(639, 242);
+            this.AdditionButton.Margin = new System.Windows.Forms.Padding(2);
             this.AdditionButton.Name = "AdditionButton";
-            this.AdditionButton.Size = new System.Drawing.Size(206, 63);
+            this.AdditionButton.Size = new System.Drawing.Size(137, 42);
             this.AdditionButton.TabIndex = 14;
             this.AdditionButton.Text = "新規追加";
             this.AdditionButton.UseVisualStyleBackColor = true;
@@ -274,9 +238,10 @@
             // 
             // DeletionButton
             // 
-            this.DeletionButton.Location = new System.Drawing.Point(957, 293);
+            this.DeletionButton.Location = new System.Drawing.Point(638, 195);
+            this.DeletionButton.Margin = new System.Windows.Forms.Padding(2);
             this.DeletionButton.Name = "DeletionButton";
-            this.DeletionButton.Size = new System.Drawing.Size(206, 63);
+            this.DeletionButton.Size = new System.Drawing.Size(137, 42);
             this.DeletionButton.TabIndex = 15;
             this.DeletionButton.Text = "削除";
             this.DeletionButton.UseVisualStyleBackColor = true;
@@ -361,16 +326,15 @@
             this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
             this.idDataGridViewTextBoxColumn.ReadOnly = true;
             this.idDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.idDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.idDataGridViewTextBoxColumn.Visible = false;
             // 
-            // categoryDataGridViewTextBoxColumn
+            // categoryDataGridViewComboBoxColumn
             // 
-            this.categoryDataGridViewTextBoxColumn.DataPropertyName = "Category";
-            this.categoryDataGridViewTextBoxColumn.HeaderText = "カデゴリ";
-            this.categoryDataGridViewTextBoxColumn.Name = "categoryDataGridViewTextBoxColumn";
-            this.categoryDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.categoryDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.categoryDataGridViewComboBoxColumn.DataPropertyName = "Category";
+            this.categoryDataGridViewComboBoxColumn.HeaderText = "カデゴリ";
+            this.categoryDataGridViewComboBoxColumn.Name = "categoryDataGridViewComboBoxColumn";
+            this.categoryDataGridViewComboBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.categoryDataGridViewComboBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // detailDataGridViewTextBoxColumn
             // 
@@ -379,18 +343,18 @@
             this.detailDataGridViewTextBoxColumn.MaxInputLength = 20;
             this.detailDataGridViewTextBoxColumn.Name = "detailDataGridViewTextBoxColumn";
             // 
-            // balanceDataGridViewTextBoxColumn
+            // balanceDataGridViewComboBoxColumn
             // 
-            this.balanceDataGridViewTextBoxColumn.DataPropertyName = "Balance";
+            this.balanceDataGridViewComboBoxColumn.DataPropertyName = "Balance";
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.balanceDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
-            this.balanceDataGridViewTextBoxColumn.HeaderText = "収支";
-            this.balanceDataGridViewTextBoxColumn.Items.AddRange(new object[] {
+            this.balanceDataGridViewComboBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.balanceDataGridViewComboBoxColumn.HeaderText = "収支";
+            this.balanceDataGridViewComboBoxColumn.Items.AddRange(new object[] {
             "支出",
             "収入"});
-            this.balanceDataGridViewTextBoxColumn.Name = "balanceDataGridViewTextBoxColumn";
-            this.balanceDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.balanceDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.balanceDataGridViewComboBoxColumn.Name = "balanceDataGridViewComboBoxColumn";
+            this.balanceDataGridViewComboBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.balanceDataGridViewComboBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // amountDataGridViewTextBoxColumn
             // 
@@ -402,23 +366,66 @@
             this.amountDataGridViewTextBoxColumn.MaxInputLength = 10;
             this.amountDataGridViewTextBoxColumn.Name = "amountDataGridViewTextBoxColumn";
             // 
-            // dateDataGridViewTextBoxColumn
+            // dateDataGridViewCalendarColumn
             // 
-            this.dateDataGridViewTextBoxColumn.DataPropertyName = "Date";
+            this.dateDataGridViewCalendarColumn.DataPropertyName = "Date";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.Format = "d";
             dataGridViewCellStyle4.NullValue = null;
-            this.dateDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dateDataGridViewTextBoxColumn.HeaderText = "日付";
-            this.dateDataGridViewTextBoxColumn.Name = "dateDataGridViewTextBoxColumn";
-            this.dateDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dateDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dateDataGridViewCalendarColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dateDataGridViewCalendarColumn.HeaderText = "日付";
+            this.dateDataGridViewCalendarColumn.Name = "dateDataGridViewCalendarColumn";
+            this.dateDataGridViewCalendarColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dateDataGridViewCalendarColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Category
+            // 
+            this.Category.HeaderText = "カテゴリ";
+            this.Category.Name = "Category";
+            this.Category.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Detail
+            // 
+            this.Detail.HeaderText = "詳細";
+            this.Detail.MaxInputLength = 20;
+            this.Detail.Name = "Detail";
+            this.Detail.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Balance
+            // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Balance.DefaultCellStyle = dataGridViewCellStyle6;
+            this.Balance.HeaderText = "収支";
+            this.Balance.Items.AddRange(new object[] {
+            "支出",
+            "収入"});
+            this.Balance.Name = "Balance";
+            this.Balance.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Amount
+            // 
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "N0";
+            this.Amount.DefaultCellStyle = dataGridViewCellStyle7;
+            this.Amount.HeaderText = "金額";
+            this.Amount.MaxInputLength = 10;
+            this.Amount.Name = "Amount";
+            this.Amount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Date
+            // 
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.Format = "d";
+            this.Date.DefaultCellStyle = dataGridViewCellStyle8;
+            this.Date.HeaderText = "日付";
+            this.Date.Name = "Date";
+            this.Date.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1176, 692);
+            this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.DeletionButton);
             this.Controls.Add(this.AdditionButton);
             this.Controls.Add(this.NewLogDataGridView);
@@ -430,7 +437,9 @@
             this.Controls.Add(this.LogsDataGridView);
             this.Controls.Add(this.FilterButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MoneyFarm";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.LogsDataGridView)).EndInit();
@@ -456,11 +465,6 @@
         private System.Windows.Forms.DataGridView NewLogDataGridView;
         private System.Windows.Forms.Button AdditionButton;
         private System.Windows.Forms.Button DeletionButton;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Category;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Detail;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Balance;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
-        private CalendarColumn Date;
         private CalendarColumn calendarColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -468,12 +472,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private CalendarColumn calendarColumn3;
-        private CalendarColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn categoryDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn categoryDataGridViewComboBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn detailDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn balanceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn balanceDataGridViewComboBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn amountDataGridViewTextBoxColumn;
-        private CalendarColumn dateDataGridViewTextBoxColumn;
+        private CalendarColumn dateDataGridViewCalendarColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Category;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Detail;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Balance;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
+        private CalendarColumn Date;
     }
 }
 
