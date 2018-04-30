@@ -124,7 +124,7 @@ namespace MoneyFarm
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AdditionButton_Click(object sender, EventArgs e)
+        private void AddButton_Click(object sender, EventArgs e)
         {
             // 新規データ行の作成
             var table = moneyFarmDataBaseDataSet.Tables["Logs"];
@@ -157,7 +157,7 @@ namespace MoneyFarm
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DeletionButton_Click(object sender, EventArgs e)
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
             // 選択しているデータがあるなら
             if (LogsDataGridView.SelectedRows.Count == 1)
