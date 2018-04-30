@@ -44,16 +44,27 @@ namespace MoneyFarm.Properties {
   <string>通勤・通学</string>
   <string>交際費</string>
   <string>趣味・娯楽</string>
-  <string>定期収入</string>
-  <string>臨時収入</string>
-  <string>その他</string>
 </ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection Categories {
+        public global::System.Collections.Specialized.StringCollection ExpenseCategories {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["Categories"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["ExpenseCategories"]));
             }
             set {
-                this["Categories"] = value;
+                this["ExpenseCategories"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>定期収入</string>\r\n  <string>臨時収入</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection IncomeCategories {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["IncomeCategories"]));
+            }
+            set {
+                this["IncomeCategories"] = value;
             }
         }
     }

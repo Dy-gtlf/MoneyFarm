@@ -10,7 +10,7 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\DB\MoneyFarmDataBase.mdf;Integrated Security=True;Connect Timeout=30</Value>
     </Setting>
-    <Setting Name="Categories" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="ExpenseCategories" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;消耗品&lt;/string&gt;
@@ -19,9 +19,13 @@
   &lt;string&gt;通勤・通学&lt;/string&gt;
   &lt;string&gt;交際費&lt;/string&gt;
   &lt;string&gt;趣味・娯楽&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="IncomeCategories" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;定期収入&lt;/string&gt;
   &lt;string&gt;臨時収入&lt;/string&gt;
-  &lt;string&gt;その他&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>
