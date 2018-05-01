@@ -25,37 +25,28 @@ namespace MoneyFarm
         /// <param name="e"></param>
         private void MainForm_Load(object sender, System.EventArgs e)
         {
-            // LogsDataGridViewの設定
-            // データをバインドしているとき、["カラム名"]指定だとnullになるのでカラムのインデックスで指定
+            // 各カテゴリの配列
             var expenseCategories = Properties.Settings.Default.ExpenseCategories.Cast<string>().ToArray();
             var incomeCategories = Properties.Settings.Default.IncomeCategories.Cast<string>().ToArray();
             var allCategories = expenseCategories.Concat(incomeCategories).Concat(new[] { "その他" }).ToArray();
 
-            ((DataGridViewComboBoxColumn)LogsDataGridView.Columns["Category1"]).Items.AddRange(allCategories);
-            ((DataGridViewComboBoxColumn)LogsDataGridView.Columns["Category1"]).DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            ((DataGridViewComboBoxColumn)LogsDataGridView.Columns["Balance1"]).DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            LogsDataGridView.Columns["Balance1"].ReadOnly = true;
-
-            // NewLogDataGridViewの設定
-            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items.AddRange(allCategories);
-            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
-            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Balance"]).DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
             // データベースの内容を同期
             logsTableAdapter.Fill(moneyFarmDataBaseDataSet.Logs);
-            // フィルターのComboBoxの内容を設定
-            CategoriesComboBox.Items.Add("すべてのカテゴリ");
-            CategoriesComboBox.Items.AddRange(allCategories);
             // 未選択状態の空白を表示しない
-            CategoriesComboBox.SelectedIndex = 0;
             BalanceComboBox.SelectedIndex = 0;
+            CategoriesComboBox.SelectedIndex = 0;
             // 今日から1ヶ月以内を表示
             DateTimePicker2.Value = DateTime.Now;
             DateTimePicker1.Value = DateTime.Now.AddMonths(-1);
             FilterAndSortLogsDataGridView();
             // 新規データの初期値を設定
+            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items.AddRange(expenseCategories.Concat(new[] { "その他" }).ToArray());
             NewLogDataGridView.Rows.Add();
-            NewLogDataGridViewInit();
-
+            NewLogDataGridView.Rows[0].Cells["Category"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items[0];
+            NewLogDataGridView.Rows[0].Cells["Detail"].Value = "";
+            NewLogDataGridView.Rows[0].Cells["Balance"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Balance"]).Items[0];
+            NewLogDataGridView.Rows[0].Cells["Amount"].Value = 0;
+            NewLogDataGridView.Rows[0].Cells["Date"].Value = DateTime.Now.ToShortDateString();
             // 編集モードになっているので解除
             LogsDataGridView.EndEdit();
             NewLogDataGridView.EndEdit();
@@ -108,18 +99,6 @@ namespace MoneyFarm
         }
 
         /// <summary>
-        /// 新規データの初期化
-        /// </summary>
-        private void NewLogDataGridViewInit()
-        {
-            NewLogDataGridView.Rows[0].Cells["Category"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items[0].ToString();
-            NewLogDataGridView.Rows[0].Cells["Detail"].Value = null;
-            NewLogDataGridView.Rows[0].Cells["Balance"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Balance"]).Items[0].ToString();
-            NewLogDataGridView.Rows[0].Cells["Amount"].Value = 0;
-            NewLogDataGridView.Rows[0].Cells["Date"].Value = DateTime.Now.ToShortDateString();
-        }
-
-        /// <summary>
         /// 追加ボタンをクリックしたときのイベント
         /// </summary>
         /// <param name="sender"></param>
@@ -130,14 +109,7 @@ namespace MoneyFarm
             var table = moneyFarmDataBaseDataSet.Tables["Logs"];
             var newRow = table.NewRow();
             newRow["Category"] = NewLogDataGridView.Rows[0].Cells["Category"].Value;
-            if (string.IsNullOrWhiteSpace((string)NewLogDataGridView.Rows[0].Cells["Detail"].Value))
-            {
-                newRow["Detail"] = null;
-            } 
-            else
-            {
-                newRow["Detail"] = NewLogDataGridView.Rows[0].Cells["Detail"].Value;
-            }
+            newRow["Detail"] = NewLogDataGridView.Rows[0].Cells["Detail"].Value;
             newRow["Balance"] = NewLogDataGridView.Rows[0].Cells["Balance"].Value;
             newRow["Amount"] = NewLogDataGridView.Rows[0].Cells["Amount"].Value;
             newRow["Date"] = NewLogDataGridView.Rows[0].Cells["Date"].Value;
@@ -146,7 +118,11 @@ namespace MoneyFarm
             table.Rows.Add(newRow);
             logsTableAdapter.Update(moneyFarmDataBaseDataSet);
             // 入力項目の初期化
-            NewLogDataGridViewInit();
+            NewLogDataGridView.Rows[0].Cells["Category"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items[0];
+            NewLogDataGridView.Rows[0].Cells["Detail"].Value = "";
+            NewLogDataGridView.Rows[0].Cells["Balance"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Balance"]).Items[0];
+            NewLogDataGridView.Rows[0].Cells["Amount"].Value = 0;
+            NewLogDataGridView.Rows[0].Cells["Date"].Value = DateTime.Now.ToShortDateString();
             // 選択状態を解除
             LogsDataGridView.ClearSelection();
             NewLogDataGridView.ClearSelection();
@@ -182,16 +158,6 @@ namespace MoneyFarm
         }
 
         /// <summary>
-        /// LogsDataGridViewのアクティブなセルを編集モードにする
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void LogsDataGridView_CellEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            LogsDataGridView.BeginEdit(true);
-        }
-
-        /// <summary>
         /// NewLogDataGridViewのアクティブなセルを編集モードにする
         /// </summary>
         /// <param name="sender"></param>
@@ -202,44 +168,6 @@ namespace MoneyFarm
         }
 
         /// <summary>
-        /// 既存データの入力チェック
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void LogsDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-        {
-            // 金額がintに変換できないなら
-            if (e.ColumnIndex == LogsDataGridView.Columns["Amount1"].Index && int.TryParse(e.FormattedValue.ToString(), out int result) == false)
-            {
-                MessageBox.Show(this, $"{LogsDataGridView.Columns[e.ColumnIndex].HeaderText} には数値のみ入力できます。", "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                ((DataGridView)sender).CancelEdit();
-                e.Cancel = true;
-            }
-            // 支出のとき、新しいカテゴリが支出カテゴリに含まれていないなら却下
-            else if (e.ColumnIndex == LogsDataGridView.Columns["Category1"].Index && (string)LogsDataGridView.Rows[e.RowIndex].Cells["Balance1"].Value == "支出")
-            {
-                var expenseCategories = Properties.Settings.Default.ExpenseCategories.Cast<string>().ToArray().Concat(new[] { "その他" }).ToArray();
-                if (expenseCategories.Contains((string)e.FormattedValue) == false)
-                { 
-                    MessageBox.Show(this, $"支出のカテゴリでは、\n\n{string.Join("\n", expenseCategories)}\n\nが選択可能です。", "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    ((DataGridView)sender).CancelEdit();
-                    e.Cancel = true;
-                }
-            }
-            // 収入のとき、新しい値が収入カテゴリに含まれていないなら却下
-            else if (e.ColumnIndex == LogsDataGridView.Columns["Category1"].Index && (string)LogsDataGridView.Rows[e.RowIndex].Cells["Balance1"].Value == "収入")
-            {
-                var incomeCategories = Properties.Settings.Default.IncomeCategories.Cast<string>().ToArray().Concat(new[] { "その他" }).ToArray();
-                if (incomeCategories.Contains((string)e.FormattedValue) == false)
-                {
-                    MessageBox.Show(this, $"収入のカテゴリでは、\n\n{string.Join("\n", incomeCategories)}\n\nが選択可能です。", "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    ((DataGridView)sender).CancelEdit();
-                    e.Cancel = true;
-                }
-            }
-        }
-
-        /// <summary>
         /// 新規データの入力チェック
         /// </summary>
         /// <param name="sender"></param>
@@ -247,19 +175,26 @@ namespace MoneyFarm
         private void NewLogDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             // 金額がintに変換できないなら
-            if (e.ColumnIndex == NewLogDataGridView.Columns["Amount"].Index && int.TryParse(e.FormattedValue.ToString(), out int result) == false)
+            if (e.ColumnIndex == NewLogDataGridView.Columns["Amount"].Index && int.TryParse((string)e.FormattedValue, out int result) == false)
             {
-                MessageBox.Show(this, $"{NewLogDataGridView.Columns[e.ColumnIndex].HeaderText} には数値のみ入力できます。", "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, $"{NewLogDataGridView.Columns[e.ColumnIndex].HeaderText} には0以上の数値のみ入力できます。", "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ((DataGridView)sender).CancelEdit();
+                e.Cancel = true;
+            }
+            // 金額が負の数値なら
+            else if (e.ColumnIndex == NewLogDataGridView.Columns["Amount"].Index && int.Parse((string)e.FormattedValue) < 0)
+            {
+                MessageBox.Show(this, $"{NewLogDataGridView.Columns[e.ColumnIndex].HeaderText} には0以上の数値のみ入力できます。", "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ((DataGridView)sender).CancelEdit();
                 e.Cancel = true;
             }
             // 収支が変更されていたなら
             if (e.ColumnIndex == NewLogDataGridView.Columns["Balance"].Index && (string)e.FormattedValue != (string)NewLogDataGridView.CurrentCell.Value)
             {
+                // その他に選択肢を退避させる
                 if ((string)NewLogDataGridView.Rows[e.RowIndex].Cells["Category"].Value != "その他")
                 {
-                    MessageBox.Show(this, $"収支が、変更されました。\nカテゴリが「その他」に変更されます。", "終始変更", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    NewLogDataGridView.Rows[e.RowIndex].Cells["Category"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items[((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items.IndexOf("その他")].ToString();
+                    NewLogDataGridView.Rows[e.RowIndex].Cells["Category"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items[((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items.IndexOf("その他")];
                 }
                 // カテゴリの候補を変更
                 if ((string)e.FormattedValue == "支出")
@@ -272,28 +207,8 @@ namespace MoneyFarm
                     var incomeCategories = Properties.Settings.Default.IncomeCategories.Cast<string>().ToArray().Concat(new[] { "その他" }).ToArray();
                     ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).DataSource = incomeCategories;
                 }
-            }
-            // 支出のとき、新しいカテゴリが支出カテゴリに含まれていないなら却下
-            else if (e.ColumnIndex == NewLogDataGridView.Columns["Balance"].Index && (string)e.FormattedValue == "支出")
-            {
-                var expenseCategories = Properties.Settings.Default.ExpenseCategories.Cast<string>().ToArray().Concat(new[] { "その他" }).ToArray();
-                if (expenseCategories.Contains((string)NewLogDataGridView.Rows[e.RowIndex].Cells["Category"].Value) == false)
-                {
-                    MessageBox.Show(this, $"支出のカテゴリでは、\n\n{string.Join("\n", expenseCategories)}\n\nが選択可能です。", "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    ((DataGridView)sender).CancelEdit();
-                    e.Cancel = true;
-                }
-            }
-            // 収入のとき、新しいカテゴリが収入カテゴリに含まれていないなら却下
-            else if (e.ColumnIndex == NewLogDataGridView.Columns["Balance"].Index && (string)e.FormattedValue == "収入")
-            {
-                var incomeCategories = Properties.Settings.Default.IncomeCategories.Cast<string>().ToArray().Concat(new[] { "その他" }).ToArray();
-                if (incomeCategories.Contains((string)NewLogDataGridView.Rows[e.RowIndex].Cells["Category"].Value) == false)
-                {
-                    MessageBox.Show(this, $"収入のカテゴリでは、\n\n{string.Join("\n", incomeCategories)}\n\nが選択可能です。", "入力値エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    ((DataGridView)sender).CancelEdit();
-                    e.Cancel = true;
-                }
+                // 初期値に設定
+                NewLogDataGridView.Rows[e.RowIndex].Cells["Category"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items[0];
             }
         }
 
@@ -362,7 +277,7 @@ namespace MoneyFarm
         }
 
         /// <summary>
-        /// 円グラフの内容を更新
+        /// データ追加時に円グラフの内容を更新
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -372,13 +287,60 @@ namespace MoneyFarm
         }
 
         /// <summary>
-        /// 円グラフの内容を更新
+        /// データ削除時に円グラフの内容を更新
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void LogsDataGridView_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
             BalanceChartUpdate();
+        }
+
+        /// <summary>
+        /// 編集用ウィンドウの表示
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            if (LogsDataGridView.SelectedRows.Count > 0)
+            {
+                using (var editForm = new EditForm(LogsDataGridView.SelectedRows[0]))
+                {
+                    var table = moneyFarmDataBaseDataSet.Tables["Logs"];
+                    editForm.ShowDialog();
+                }
+                logsTableAdapter.Update(moneyFarmDataBaseDataSet);
+            }
+        }
+
+        /// <summary>
+        /// 収支の内容に合わせてフィルター用のカテゴリ選択の内容を変更
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BalanceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var expenseCategories = Properties.Settings.Default.ExpenseCategories.Cast<string>().ToArray();
+            var incomeCategories = Properties.Settings.Default.IncomeCategories.Cast<string>().ToArray();
+            var allCategories = expenseCategories.Concat(incomeCategories).Concat(new[] { "その他" }).ToArray();
+            switch (BalanceComboBox.SelectedIndex)
+            {
+                case 0:
+                    CategoriesComboBox.Items.Clear();
+                    CategoriesComboBox.Items.AddRange(new[] { "カテゴリ指定無し" }.Concat(allCategories).ToArray());
+                    break;
+                case 1:
+                    CategoriesComboBox.Items.Clear();
+                    CategoriesComboBox.Items.AddRange(new[] { "カテゴリ指定無し" }.Concat(expenseCategories).Concat(new[] { "その他" }).ToArray());
+                    break;
+                case 2:
+                    CategoriesComboBox.Items.Clear();
+                    CategoriesComboBox.Items.AddRange(new[] { "カテゴリ指定無し" }.Concat(incomeCategories).Concat(new[] { "その他" }).ToArray());
+                    break;
+            }
+            // 選択の初期位置を修正
+            CategoriesComboBox.SelectedIndex = 0;
         }
     }
 }

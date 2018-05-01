@@ -28,55 +28,103 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.NewLogDataGridView = new System.Windows.Forms.DataGridView();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.EditLogDataGridView = new System.Windows.Forms.DataGridView();
+            this.OKButton = new System.Windows.Forms.Button();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.calendarColumn1 = new MoneyFarm.CalendarColumn();
             this.Balance = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Category = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Detail = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new MoneyFarm.CalendarColumn();
-            this.OKButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.NewLogDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EditLogDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // NewLogDataGridView
+            // EditLogDataGridView
             // 
-            this.NewLogDataGridView.AllowUserToAddRows = false;
-            this.NewLogDataGridView.AllowUserToDeleteRows = false;
-            this.NewLogDataGridView.AllowUserToResizeColumns = false;
-            this.NewLogDataGridView.AllowUserToResizeRows = false;
-            this.NewLogDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.NewLogDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.NewLogDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.NewLogDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.NewLogDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.EditLogDataGridView.AllowUserToAddRows = false;
+            this.EditLogDataGridView.AllowUserToDeleteRows = false;
+            this.EditLogDataGridView.AllowUserToResizeColumns = false;
+            this.EditLogDataGridView.AllowUserToResizeRows = false;
+            this.EditLogDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.EditLogDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.EditLogDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.EditLogDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.EditLogDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Balance,
             this.Category,
             this.Detail,
             this.Amount,
             this.Date});
-            this.NewLogDataGridView.Location = new System.Drawing.Point(11, 11);
-            this.NewLogDataGridView.Margin = new System.Windows.Forms.Padding(2);
-            this.NewLogDataGridView.Name = "NewLogDataGridView";
-            this.NewLogDataGridView.RowHeadersVisible = false;
-            this.NewLogDataGridView.RowTemplate.Height = 27;
-            this.NewLogDataGridView.Size = new System.Drawing.Size(621, 42);
-            this.NewLogDataGridView.TabIndex = 14;
+            this.EditLogDataGridView.Location = new System.Drawing.Point(16, 16);
+            this.EditLogDataGridView.MultiSelect = false;
+            this.EditLogDataGridView.Name = "EditLogDataGridView";
+            this.EditLogDataGridView.RowHeadersVisible = false;
+            this.EditLogDataGridView.RowTemplate.Height = 27;
+            this.EditLogDataGridView.Size = new System.Drawing.Size(932, 63);
+            this.EditLogDataGridView.TabIndex = 14;
+            this.EditLogDataGridView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.EditLogDataGridView_CellEnter);
+            this.EditLogDataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.EditLogDataGridView_CellValidating);
+            // 
+            // OKButton
+            // 
+            this.OKButton.Location = new System.Drawing.Point(956, 18);
+            this.OKButton.Margin = new System.Windows.Forms.Padding(4);
+            this.OKButton.Name = "OKButton";
+            this.OKButton.Size = new System.Drawing.Size(146, 62);
+            this.OKButton.TabIndex = 15;
+            this.OKButton.Text = "編集確定";
+            this.OKButton.UseVisualStyleBackColor = true;
+            this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "詳細";
+            this.dataGridViewTextBoxColumn1.MaxInputLength = 20;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn1.Width = 185;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N0";
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dataGridViewTextBoxColumn2.HeaderText = "金額";
+            this.dataGridViewTextBoxColumn2.MaxInputLength = 10;
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn2.Width = 186;
+            // 
+            // calendarColumn1
+            // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Format = "d";
+            this.calendarColumn1.DefaultCellStyle = dataGridViewCellStyle6;
+            this.calendarColumn1.HeaderText = "日付";
+            this.calendarColumn1.Name = "calendarColumn1";
+            this.calendarColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.calendarColumn1.Width = 186;
             // 
             // Balance
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Balance.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Balance.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Balance.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
             this.Balance.HeaderText = "収支";
             this.Balance.Items.AddRange(new object[] {
             "支出",
@@ -86,6 +134,7 @@
             // 
             // Category
             // 
+            this.Category.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
             this.Category.HeaderText = "カテゴリ";
             this.Category.Name = "Category";
             this.Category.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -99,9 +148,9 @@
             // 
             // Amount
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "N0";
-            this.Amount.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N0";
+            this.Amount.DefaultCellStyle = dataGridViewCellStyle3;
             this.Amount.HeaderText = "金額";
             this.Amount.MaxInputLength = 10;
             this.Amount.Name = "Amount";
@@ -109,47 +158,42 @@
             // 
             // Date
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.Format = "d";
-            this.Date.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Format = "d";
+            this.Date.DefaultCellStyle = dataGridViewCellStyle4;
             this.Date.HeaderText = "日付";
             this.Date.Name = "Date";
             this.Date.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
-            // OKButton
-            // 
-            this.OKButton.Location = new System.Drawing.Point(637, 12);
-            this.OKButton.Name = "OKButton";
-            this.OKButton.Size = new System.Drawing.Size(97, 41);
-            this.OKButton.TabIndex = 15;
-            this.OKButton.Text = "編集確定";
-            this.OKButton.UseVisualStyleBackColor = true;
-            // 
             // EditForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(748, 65);
+            this.ClientSize = new System.Drawing.Size(1122, 98);
             this.Controls.Add(this.OKButton);
-            this.Controls.Add(this.NewLogDataGridView);
+            this.Controls.Add(this.EditLogDataGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "EditForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "EditForm";
             this.Load += new System.EventHandler(this.EditForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.NewLogDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.EditLogDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView NewLogDataGridView;
+        private System.Windows.Forms.DataGridView EditLogDataGridView;
+        private System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.DataGridViewComboBoxColumn Balance;
         private System.Windows.Forms.DataGridViewComboBoxColumn Category;
         private System.Windows.Forms.DataGridViewTextBoxColumn Detail;
         private System.Windows.Forms.DataGridViewTextBoxColumn Amount;
         private CalendarColumn Date;
-        private System.Windows.Forms.Button OKButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private CalendarColumn calendarColumn1;
     }
 }
