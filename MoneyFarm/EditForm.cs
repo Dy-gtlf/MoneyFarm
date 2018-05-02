@@ -12,9 +12,9 @@ namespace MoneyFarm
 {
     public partial class EditForm : Form
     {
-        private DataGridViewRow targetRow = new DataGridViewRow();
+        private DataRow targetRow;
 
-        public EditForm(DataGridViewRow row)
+        public EditForm(DataRow row)
         {
             InitializeComponent();
             targetRow = row;
@@ -24,7 +24,7 @@ namespace MoneyFarm
         {
             // 初期値の設定
             EditLogDataGridView.Rows.Add();
-            var balance = (string)targetRow.Cells["Balance1"].Value;
+            var balance = (string)targetRow["Balance"];
             // 収支によって編集可能なカテゴリを設定
             if (balance == "支出")
             {
@@ -38,9 +38,9 @@ namespace MoneyFarm
             }
             // 選択データの値を初期値とする
             EditLogDataGridView.Rows[0].Cells["Balance"].Value = ((DataGridViewComboBoxColumn)EditLogDataGridView.Columns["Balance"]).Items[((DataGridViewComboBoxColumn)EditLogDataGridView.Columns["Balance"]).Items.IndexOf(balance)];
-            EditLogDataGridView.Rows[0].Cells["Category"].Value = ((DataGridViewComboBoxColumn)EditLogDataGridView.Columns["Category"]).Items[((DataGridViewComboBoxColumn)EditLogDataGridView.Columns["Category"]).Items.IndexOf(targetRow.Cells["Category1"].Value)];
-            EditLogDataGridView.Rows[0].Cells["Detail"].Value = targetRow.Cells["Detail1"].Value;
-            EditLogDataGridView.Rows[0].Cells["Amount"].Value = targetRow.Cells["Amount1"].Value;
+            EditLogDataGridView.Rows[0].Cells["Category"].Value = ((DataGridViewComboBoxColumn)EditLogDataGridView.Columns["Category"]).Items[((DataGridViewComboBoxColumn)EditLogDataGridView.Columns["Category"]).Items.IndexOf(targetRow["Category"])];
+            EditLogDataGridView.Rows[0].Cells["Detail"].Value = targetRow["Detail"];
+            EditLogDataGridView.Rows[0].Cells["Amount"].Value = targetRow["Amount"];
             EditLogDataGridView.Rows[0].Cells["Date"].Value = DateTime.Now.ToShortDateString();
             EditLogDataGridView.EndEdit();
         }
@@ -77,7 +77,7 @@ namespace MoneyFarm
                 e.Cancel = true;
             }
             // 収支が変更されていたなら
-            if (e.ColumnIndex == EditLogDataGridView.Columns["Balance"].Index && (string)e.FormattedValue != (string)EditLogDataGridView.CurrentCell.Value)
+            else if (e.ColumnIndex == EditLogDataGridView.Columns["Balance"].Index && (string)e.FormattedValue != (string)EditLogDataGridView.CurrentCell.Value)
             {
                 // その他に選択肢を退避させる
                 if ((string)EditLogDataGridView.Rows[e.RowIndex].Cells["Category"].Value != "その他")
@@ -100,14 +100,24 @@ namespace MoneyFarm
             }
         }
 
+        /// <summary>
+        /// 編集の確定
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OKButton_Click(object sender, EventArgs e)
         {
-            targetRow.Cells["Category1"].Value = EditLogDataGridView.Rows[0].Cells["Category"].Value;
-            targetRow.Cells["Balance1"].Value = EditLogDataGridView.Rows[0].Cells["Balance"].Value;
-            targetRow.Cells["Detail1"].Value = EditLogDataGridView.Rows[0].Cells["Detail"].Value;
-            targetRow.Cells["Amount1"].Value = EditLogDataGridView.Rows[0].Cells["Amount"].Value;
-            targetRow.Cells["Date1"].Value = EditLogDataGridView.Rows[0].Cells["Date"].Value;
-            Close();
+            var result = MessageBox.Show(this, "編集を確定しますか?", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+            // Yesを選択したなら編集を確定
+            if (result == DialogResult.Yes)
+            {
+                targetRow["Category"] = EditLogDataGridView.Rows[0].Cells["Category"].Value;
+                targetRow["Balance"] = EditLogDataGridView.Rows[0].Cells["Balance"].Value;
+                targetRow["Detail"] = EditLogDataGridView.Rows[0].Cells["Detail"].Value;
+                targetRow["Amount"] = EditLogDataGridView.Rows[0].Cells["Amount"].Value;
+                targetRow["Date"] = EditLogDataGridView.Rows[0].Cells["Date"].Value;
+                Close();
+            }
         }
     }
 }

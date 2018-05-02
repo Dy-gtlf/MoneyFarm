@@ -40,7 +40,7 @@ namespace MoneyFarm
             DateTimePicker1.Value = DateTime.Now.AddMonths(-1);
             FilterAndSortLogsDataGridView();
             // 新規データの初期値を設定
-            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items.AddRange(expenseCategories.Concat(new[] { "その他" }).ToArray());
+            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).DataSource = expenseCategories.Concat(new[] { "その他" }).ToArray();
             NewLogDataGridView.Rows.Add();
             NewLogDataGridView.Rows[0].Cells["Category"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items[0];
             NewLogDataGridView.Rows[0].Cells["Detail"].Value = "";
@@ -48,10 +48,7 @@ namespace MoneyFarm
             NewLogDataGridView.Rows[0].Cells["Amount"].Value = 0;
             NewLogDataGridView.Rows[0].Cells["Date"].Value = DateTime.Now.ToShortDateString();
             // 編集モードになっているので解除
-            LogsDataGridView.EndEdit();
             NewLogDataGridView.EndEdit();
-
-            BalanceChartUpdate();
         }
 
         /// <summary>
@@ -118,6 +115,13 @@ namespace MoneyFarm
             table.Rows.Add(newRow);
             logsTableAdapter.Update(moneyFarmDataBaseDataSet);
             // 入力項目の初期化
+            var expenseCategories = Properties.Settings.Default.ExpenseCategories.Cast<string>().ToArray();
+            // その他に選択肢を退避させる
+            if ((string)NewLogDataGridView.Rows[0].Cells["Category"].Value != "その他")
+            {
+                NewLogDataGridView.Rows[0].Cells["Category"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items[((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items.IndexOf("その他")];
+            }
+            ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).DataSource = expenseCategories.Concat(new[] { "その他" }).ToArray();
             NewLogDataGridView.Rows[0].Cells["Category"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Category"]).Items[0];
             NewLogDataGridView.Rows[0].Cells["Detail"].Value = "";
             NewLogDataGridView.Rows[0].Cells["Balance"].Value = ((DataGridViewComboBoxColumn)NewLogDataGridView.Columns["Balance"]).Items[0];
@@ -189,7 +193,7 @@ namespace MoneyFarm
                 e.Cancel = true;
             }
             // 収支が変更されていたなら
-            if (e.ColumnIndex == NewLogDataGridView.Columns["Balance"].Index && (string)e.FormattedValue != (string)NewLogDataGridView.CurrentCell.Value)
+            else if (e.ColumnIndex == NewLogDataGridView.Columns["Balance"].Index && (string)e.FormattedValue != (string)NewLogDataGridView.CurrentCell.Value)
             {
                 // その他に選択肢を退避させる
                 if ((string)NewLogDataGridView.Rows[e.RowIndex].Cells["Category"].Value != "その他")
@@ -305,9 +309,11 @@ namespace MoneyFarm
         {
             if (LogsDataGridView.SelectedRows.Count > 0)
             {
-                using (var editForm = new EditForm(LogsDataGridView.SelectedRows[0]))
+                var table = moneyFarmDataBaseDataSet.Tables["Logs"];
+                table.PrimaryKey = new DataColumn[] { table.Columns["Id"] };
+                var targetRow = table.Rows.Find(LogsDataGridView.SelectedRows[0].Cells["Id1"].Value);
+                using (var editForm = new EditForm(targetRow))
                 {
-                    var table = moneyFarmDataBaseDataSet.Tables["Logs"];
                     editForm.ShowDialog();
                 }
                 logsTableAdapter.Update(moneyFarmDataBaseDataSet);
