@@ -6,6 +6,7 @@ using System.Data.Linq;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -225,17 +226,19 @@ namespace MoneyFarm
             ExpensesChart.Series[0].Points.Clear();
             // 各カテゴリの合計を算出し、円グラフに追加
             var expenseCategories = Properties.Settings.Default.ExpenseCategories.Cast<string>().ToArray();
+            var allExpensesTotal = 0;
             foreach (var category in expenseCategories)
             {
                 // 支出の各合計
-                var expenseTotals = LogsDataGridView.Rows.Cast<DataGridViewRow>().Where(row => (string)row.Cells["Category1"].Value == category && (string)row.Cells["Balance1"].Value == "支出").Sum(row => (int)row.Cells["Amount1"].Value);
+                var expenseTotal = LogsDataGridView.Rows.Cast<DataGridViewRow>().Where(row => (string)row.Cells["Category1"].Value == category && (string)row.Cells["Balance1"].Value == "支出").Sum(row => (int)row.Cells["Amount1"].Value);
                 var point = new DataPoint
                 {
-                    Label = category,
+                    Label = $"{category} {expenseTotal} 円",
                     XValue = 0,
-                    YValues = new double[] { expenseTotals }
+                    YValues = new double[] { expenseTotal }
                 };
                 ExpensesChart.Series[0].Points.Add(point);
+                allExpensesTotal += expenseTotal;
             }
             // 金額で降順にする
             ExpensesChart.Series[0].Sort(PointSortOrder.Descending);
@@ -244,27 +247,30 @@ namespace MoneyFarm
             var otherExpensesTotal = LogsDataGridView.Rows.Cast<DataGridViewRow>().Where(row => (string)row.Cells["Category1"].Value == "その他" && (string)row.Cells["Balance1"].Value == "支出").Sum(row => (int)row.Cells["Amount1"].Value);
             var otherExpensesPoint = new DataPoint
             {
-                Label = "その他",
+                Label = $"その他 {otherExpensesTotal} 円",
                 XValue = 0,
                 YValues = new double[] { otherExpensesTotal }
             };
             ExpensesChart.Series[0].Points.Add(otherExpensesPoint);
-
+            allExpensesTotal += otherExpensesTotal;
+            ExpensesChart.Titles[0].Text = $"支出 {allExpensesTotal} 円";
             // 収入のグラフ作成
             IncomesChart.Series[0].Points.Clear();
             // 各カテゴリの合計を算出し、円グラフに追加
             var incomeCategories = Properties.Settings.Default.IncomeCategories.Cast<string>().ToArray();
+            var allIncomesTotal = 0;
             foreach (var category in incomeCategories)
             {
                 // 収入の各合計
-                var incomeTotals = LogsDataGridView.Rows.Cast<DataGridViewRow>().Where(row => (string)row.Cells["Category1"].Value == category && (string)row.Cells["Balance1"].Value == "収入").Sum(row => (int)row.Cells["Amount1"].Value);
+                var incomeTotal = LogsDataGridView.Rows.Cast<DataGridViewRow>().Where(row => (string)row.Cells["Category1"].Value == category && (string)row.Cells["Balance1"].Value == "収入").Sum(row => (int)row.Cells["Amount1"].Value);
                 var point = new DataPoint
                 {
-                    Label = category,
+                    Label = $"{category} {incomeTotal} 円",
                     XValue = 0,
-                    YValues = new double[] { incomeTotals }
+                    YValues = new double[] { incomeTotal }
                 };
                 IncomesChart.Series[0].Points.Add(point);
+                allIncomesTotal += incomeTotal;
             }
             // 金額で降順にする
             IncomesChart.Series[0].Sort(PointSortOrder.Descending);
@@ -273,11 +279,13 @@ namespace MoneyFarm
             var otherIncomesTotal = LogsDataGridView.Rows.Cast<DataGridViewRow>().Where(row => (string)row.Cells["Category1"].Value == "その他" && (string)row.Cells["Balance1"].Value == "収入").Sum(row => (int)row.Cells["Amount1"].Value);
             var otherIncomesPoint = new DataPoint
             {
-                Label = "その他",
+                Label = $"その他 {otherIncomesTotal} 円",
                 XValue = 0,
                 YValues = new double[] { otherIncomesTotal }
             };
             IncomesChart.Series[0].Points.Add(otherIncomesPoint);
+            allIncomesTotal += otherIncomesTotal;
+            IncomesChart.Titles[0].Text = $"収入 {allIncomesTotal} 円";
         }
 
         /// <summary>
