@@ -16,7 +16,7 @@
   &lt;string&gt;消耗品&lt;/string&gt;
   &lt;string&gt;生活費&lt;/string&gt;
   &lt;string&gt;食費&lt;/string&gt;
-  &lt;string&gt;通勤・通学&lt;/string&gt;
+  &lt;string&gt;交通費&lt;/string&gt;
   &lt;string&gt;交際費&lt;/string&gt;
   &lt;string&gt;趣味・娯楽&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>

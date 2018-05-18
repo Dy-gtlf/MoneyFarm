@@ -12,7 +12,7 @@ namespace MoneyFarm.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.6.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -41,7 +41,7 @@ namespace MoneyFarm.Properties {
   <string>消耗品</string>
   <string>生活費</string>
   <string>食費</string>
-  <string>通勤・通学</string>
+  <string>交通費</string>
   <string>交際費</string>
   <string>趣味・娯楽</string>
 </ArrayOfString>")]
